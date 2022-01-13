@@ -1,149 +1,45 @@
 package pl.emil;
 
-import java.util.*;
+import pl.emil.File.imageFile.GIFImageFile;
+import pl.emil.File.imageFile.JPGImageFile;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
+        GIFImageFile jpgImageFile = new JPGImageFile("plik.jpg", 100, 100);
+        GIFImageFile gifImageFile = new GIFImageFile("plik.gif", 200);
 
-        Point pointA = new Point("A", 1, 1);
-        Point pointB = new Point("B", 3, 1);
-        Point pointC = new Point("C", 5, 3);
-        Point pointD = new Point("D", 2, 8);
-        Point pointE = new Point("E", 8, 8);
+        List<GIFImageFile> files = new ArrayList<>();
+        files.add(jpgImageFile);
+        files.add(gifImageFile);
 
-//        Point pointA = new Point("E", 2,3);
-//        Point pointB = new Point("B", 5,1);
-//        Point pointC = new Point("D", 4,7);
-//        Point pointD = new Point("C", 7,7);
-//        Point pointE = new Point("A", 7,3);
-
-        pointB.putDistance(pointA);
-        pointB.putDistance(pointC);
-        pointB.putDistance(pointD);
-        pointB.putDistance(pointE);
-
-        pointA.putDistance(pointB);
-        pointA.putDistance(pointC);
-        pointA.putDistance(pointD);
-        pointA.putDistance(pointE);
-
-        pointC.putDistance(pointB);
-        pointC.putDistance(pointA);
-        pointC.putDistance(pointD);
-        pointC.putDistance(pointE);
-
-        pointD.putDistance(pointB);
-        pointD.putDistance(pointC);
-        pointD.putDistance(pointA);
-        pointD.putDistance(pointE);
-
-        pointE.putDistance(pointA);
-        pointE.putDistance(pointB);
-        pointE.putDistance(pointC);
-        pointE.putDistance(pointD);
-
-        pointB.pathsToB(pointA);
-        pointB.pathsToB(pointC);
-        pointB.pathsToB(pointD);
-        pointB.pathsToB(pointE);
-
-        System.out.println("Pary: ");
-        System.out.println("Odległości od A: ");
-        for (var entry : pointA.mapDistances.entrySet()) {
-            System.out.println(entry.getKey() + " -> " + entry.getValue());
-        }
-        System.out.println();
-        System.out.println("Odległości od B: ");
-        for (var entry : pointB.mapDistances.entrySet()) {
-            System.out.println(entry.getKey() + " -> " + entry.getValue());
-        }
-        System.out.println();
-        System.out.println("Odległości od C: ");
-        for (var entry : pointC.mapDistances.entrySet()) {
-            System.out.println(entry.getKey() + " -> " + entry.getValue());
-        }
-        System.out.println();
-        System.out.println("Odległości od D: ");
-        for (var entry : pointD.mapDistances.entrySet()) {
-            System.out.println(entry.getKey() + " -> " + entry.getValue());
-        }
-        System.out.println();
-        System.out.println("Odległości od E: ");
-        for (var entry : pointE.mapDistances.entrySet()) {
-            System.out.println(entry.getKey() + " -> " + entry.getValue());
-        }
-        System.out.println();
-        System.out.println("Odległości do B: ");
-        for (var entry : pointB.pathsToB.entrySet()) {
-            System.out.println(pointB.getName() + " -> " + entry.getKey() + " : " + entry.getValue());
-        }
-
-        String startPoint = "B";
-
-        Map<String, Point> pointMap = new HashMap<>();
-
-        pointMap.put(pointA.getName(), pointA);
-        pointMap.put(pointB.getName(), pointB);
-        pointMap.put(pointC.getName(), pointC);
-        pointMap.put(pointD.getName(), pointD);
-        pointMap.put(pointE.getName(), pointE);
-
-        for (var key : pointMap.keySet()) {
-            System.out.println(key);
-        }
-
-        List<String> shortestPathList = new ArrayList<>();
-
-
-        String actualPoint = startPoint;
-        String previousPoint;
-        Point temporaryPoint = pointMap.get(actualPoint);
-
-        double totalDistance = 0.0;
-
-        System.out.println("temporaryPoint: " + temporaryPoint.getName());
-
-
-        for (int i = pointMap.size(); i > 1; i--) {
-            shortestPathList.add(temporaryPoint.getName());
-            pointMap.remove(actualPoint);
-            Point.removeFromPathsToB(actualPoint);
-            System.out.println();
-            System.out.println("mapa punktów po usunięciu aktualnego punktu: ");
-            for (var entry : pointMap.entrySet()) {
-                System.out.println(entry.getKey());
+        for(GIFImageFile file : files) {
+            if (files instanceof JPGImageFile){
+                System.out.println("To plik JPG");
+            } else if (files instanceof GIFImageFile) {
+                System.out.println("To plik GIF");
             }
-            previousPoint = actualPoint;
-            System.out.println("actualPoint: " + actualPoint);
-            System.out.println("temporaryPoint: " + temporaryPoint.getName());
-            actualPoint = temporaryPoint.findClosestPoint();
-            System.out.println("actualPoint2: " + actualPoint);
-            totalDistance = totalDistance + temporaryPoint.getClosestDistance(actualPoint);
-            System.out.println("totalny przebyty dystans: " + totalDistance);
-            temporaryPoint = pointMap.get(actualPoint);
-            System.out.println("temporary point: " + temporaryPoint.getName());
-            System.out.println("previous point: " + previousPoint);
-            if (temporaryPoint != null) {
-                if (temporaryPoint.getMapDistances().size() > 0) {
-                    temporaryPoint.removePointFromMapDistances(previousPoint);
-                }
-            } else {
-                for(var key : pointMap.keySet()){
-                    String firstPoint = pointMap.get();
-                }
         }
+        System.out.println(jpgImageFile instanceof JPGImageFile);
 
-        shortestPathList.add(temporaryPoint.getName());
 
-        System.out.print("The shortest way is: ");
-        for (String s : shortestPathList) {
-            System.out.print(s + " > ");
-        }
-        System.out.println(startPoint);
+//        GIFImageFile gif1 = new GIFImageFile("nazwa1.gif", 180);
+//        JPGImageFile jpg1 = new JPGImageFile("nazwa1.jpg", 200, 80);
+//
+//        MP3MusicFile mp3file = new MP3MusicFile("Plik.mp3", 400, "marilyn Manson", "broken", 100);
+//
+//        HDDdrive drive = new HDDdrive();
+//        drive.addFile(gif1);
+//        drive.addFile(jpg1);
+//        drive.addFile(mp3file);
+//
+//        drive.listFiles();
+//        drive.findFile("plik.mp3");
+//        System.out.println(mp3file.getSize());
 
-        totalDistance = totalDistance + temporaryPoint.getClosestDistance(startPoint);
-        System.out.println("Total distance= " + totalDistance);
 
     }
 }
